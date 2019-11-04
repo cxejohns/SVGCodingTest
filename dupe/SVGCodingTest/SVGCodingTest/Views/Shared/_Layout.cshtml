@@ -18,7 +18,7 @@
 <body class="k-content">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid d-flex justify-content-between p-0">
-            <h1 class="navbar-brand d-flex align-items-center">Vehicles</h1>
+            <a asp-action="Index" asp-controller="Home"><h1 class="navbar-brand d-flex align-items-center">Vehicles</h1></a>
             <button id="configure" class="k-rpanel-toggle k-button k-primary btn-toggle">
                 <span class="k-icon k-i-menu"></span>
             </button>
@@ -31,10 +31,8 @@
             .HtmlAttributes(new { style="width:100%" })
             .Items(items =>
             {
-                items.Add().Text("Item 1");
-                items.Add().Text("Item 2");
-                items.Add().Text("Item 3");
-                items.Add().Text("Disabled item").Enabled(false);
+                items.Add().Text("Sales").Url("../Chart/Sales");
+                items.Add().Text("Market Share").Url("../Chart/MarketShare");
             })
         )
     </div>

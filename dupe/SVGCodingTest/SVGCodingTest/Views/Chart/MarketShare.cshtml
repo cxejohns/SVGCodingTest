@@ -1,0 +1,42 @@
+﻿@using SVGCodingTest.Models;
+
+@model SalesReport
+
+@{
+    ViewBag.Title = "MarketShare";
+}
+
+<h2>Market Share Per Vehicle in 2019</h2>
+
+<div id="chart" style="width:600px;">
+    @(Html.Kendo().Chart()
+                .Name("PieChart")
+                .Title("Market Share Chart")
+                .Legend(c => c.Position(ChartLegendPosition.Top))
+                .ChartArea(c => c.Background("transparent")).Series(series =>
+                {
+                    foreach(Vehicle v in Model.Vehicles)
+                    {
+                       series.Column(new decimal[] { v.GetMarketShare2019(Model)}).Name(v.Type);
+                    }
+                })
+                .Tooltip(t => t.Visible(true))
+                .CategoryAxis(a => a.Name("Years")
+                .Categories("Market Share"))
+                .ValueAxis(x => x.Numeric().Labels(l => l.Format("{0}%")))
+    )
+</div>
+<button onclick="downloadSVG()">Download as SVG</button>
+<script>
+    function downloadSVG() {
+
+        var chart = $("#PieChart").getKendoChart();
+        chart.exportSVG().done(function (data) {
+            kendo.saveAs({
+                dataURI: data,
+                fileName: "MarketShare2019.svg"
+            });
+        });
+    }
+
+</script>
