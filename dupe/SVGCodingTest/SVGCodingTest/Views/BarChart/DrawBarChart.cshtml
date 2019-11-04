@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "DrawBarChart";
+}
+
+<h2>DrawBarChart</h2>
+
+<div id="chart" style="width:600px;">
+    @(Html.Kendo().Chart()
+                .Name("BarChart")
+                .Title("Draw Bar Chart")
+                .Legend(c => c.Position(ChartLegendPosition.Top))
+                .ChartArea(c => c.Background("transparent")).Series(series =>
+                {
+                    series.Column(new double[] {3.900,6.988,7.889,5.99  }).Name("Product 1");
+                    series.Column(new double[] {3.900,6.988,7.889,5.99  }).Name("Product 2");
+                    series.Column(new double[] {3.900,6.988,7.889,5.99  }).Name("Product 3");
+                })
+                .Tooltip(t => t.Visible(true))
+                .CategoryAxis( a => a.Name("Years")
+                .Categories("2012","2013","2014","2015"))
+                .ValueAxis(x => x.Numeric().Labels (l => l.Format("{0}%"))
+           )
+        )
+</div>
+<button onclick="downloadSVG()">Download as SVG</button>
+<script>
+    function downloadSVG() {
+
+    var chart = $("#BarChart").getKendoChart();
+    chart.exportSVG().done(function (data) {
+        kendo.saveAs({
+            dataURI: data,
+            fileName: "chart.svg"
+        });
+    });
+    }
+    
+</script>
